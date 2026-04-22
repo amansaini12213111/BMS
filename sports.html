@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports Activities - BMS Clone</title>
+    <style>
+        :root { --primary: #f84464; --dark: #333545; --bg: #0b0b0c; --card-bg: #1f2128; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: #fff; }
+        
+        nav { background: var(--dark); padding: 15px 10%; display: flex; justify-content: space-between; border-bottom: 1px solid #444; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; opacity: 0.8; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Filter Bar */
+        .filter-bar { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 30px; border: 1px solid #333; }
+        .filter-group { display: flex; align-items: center; gap: 10px; }
+        
+        input[type="date"], select { background: #4c4e5f; color: white; border: none; padding: 10px; border-radius: 4px; outline: none; }
+        
+        .weekend-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .weekend-btn:hover { background: #d63350; }
+        .reset-btn { background: transparent; color: #999; border: 1px solid #444; padding: 10px; border-radius: 4px; cursor: pointer; }
+
+        /* Sports Cards */
+        .sports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+        .sport-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #2a2d37; display: block; }
+        .sport-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .sport-img { width: 100%; height: 160px; object-fit: cover; }
+        
+        .sport-content { padding: 15px; }
+        .sport-title { font-size: 17px; font-weight: bold; margin-bottom: 5px; display: block; }
+        .sport-date { color: var(--primary); font-size: 13px; font-weight: 600; }
+        .sport-price { font-size: 18px; font-weight: 800; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="font-weight: 800; color: var(--primary); font-size: 20px;">BMS SPORTS</div>
+    <div class="nav-links">
+        <a href="index.html">Movies</a>
+        <a href="sports.html" style="opacity: 1; color: var(--primary);">Sports</a>
+        <a href="login.html">Sign In</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label>Filter Date:</label>
+            <input type="date" id="date-input" onchange="filterByDate()">
+        </div>
+        <button class="weekend-btn" id="weekend-filter" onclick="filterWeekend()">This Weekend</button>
+        <button class="reset-btn" onclick="resetFilters()">Reset</button>
+        <div style="margin-left: auto;">
+            <select id="sort-select" onchange="sortSports()">
+                <option value="default">Sort by Price</option>
+                <option value="low">Low to High</option>
+                <option value="high">High to Low</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sports-grid" id="sports-container">
+        <div class="sport-card" data-price="200" data-day="Sunday" data-date="2026-04-26">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&h=300" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Morning Flow Yoga</span>
+                <span class="sport-price">₹200</span>
+            </div>
+        </div>
+
+        <div class="sport-card" data-price="500" data-day="Saturday" data-date="2026-04-25">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=500&h=300" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Champions Turf League</span>
+                <span class="sport-price">₹500</span>
+            </div>
+        </div>
+
+        <div class="sport-card" data-price="1200" data-day="Sunday" data-date="2026-04-26">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=500&h=300" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Night Trek Expedition</span>
+                <span class="sport-price">₹1200</span>
+            </div>
+        </div>
+
+        <div class="sport-card" data-price="350" data-day="Friday" data-date="2026-04-24">
+            <img src="https://images.unsplash.com/photo-1626225967045-944002b8c480?auto=format&fit=crop&w=500&h=300" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-title">Smashers Open 2026</span>
+                <span class="sport-price">₹350</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterWeekend() {
+        const cards = document.querySelectorAll('.sport-card');
+        cards.forEach(card => {
+            const day = card.getAttribute('data-day');
+            card.style.display = (day === 'Saturday' || day === 'Sunday') ? 'block' : 'none';
+        });
+    }
+
+    function filterByDate() {
+        const selectedDate = document.getElementById('date-input').value;
+        const cards = document.querySelectorAll('.sport-card');
+        cards.forEach(card => {
+            card.style.display = (card.getAttribute('data-date') === selectedDate) ? 'block' : 'none';
+        });
+    }
+
+    function resetFilters() {
+        const cards = document.querySelectorAll('.sport-card');
+        cards.forEach(card => card.style.display = 'block');
+        document.getElementById('date-input').value = '';
+    }
+
+    function sortSports() {
+        const container = document.getElementById('sports-container');
+        const cards = Array.from(container.getElementsByClassName('sport-card'));
+        const val = document.getElementById('sort-select').value;
+
+        cards.sort((a, b) => {
+            let p1 = parseInt(a.getAttribute('data-price'));
+            let p2 = parseInt(b.getAttribute('data-price'));
+            return val === 'low' ? p1 - p2 : p2 - p1;
+        });
+
+        cards.forEach(card => container.appendChild(card));
+    }
+</script>
+
+</body>
+</html>
