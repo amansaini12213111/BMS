@@ -6,32 +6,21 @@
     <style>
         :root { --primary: #f84464; --dark: #333545; --bg: #0b0b0c; --card-bg: #1f2128; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: #fff; }
-        
-        nav { background: var(--dark); padding: 15px 10%; display: flex; justify-content: space-between; border-bottom: 1px solid #444; }
+        nav { background: var(--dark); padding: 15px 10%; display: flex; justify-content: space-between; border-bottom: 1px solid #444; sticky; top: 0; z-index: 100; }
         .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; opacity: 0.8; }
-
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        
-        /* Filter Bar */
-        .filter-bar { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 30px; border: 1px solid #333; }
-        .filter-group { display: flex; align-items: center; gap: 10px; }
-        
-        input[type="date"], select { background: #4c4e5f; color: white; border: none; padding: 10px; border-radius: 4px; outline: none; }
-        
-        .weekend-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .weekend-btn:hover { background: #d63350; }
-        .reset-btn { background: transparent; color: #999; border: 1px solid #444; padding: 10px; border-radius: 4px; cursor: pointer; }
-
-        /* Sports Cards */
-        .sports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
-        .sport-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #2a2d37; display: block; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .filter-bar { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 30px; border: 1px solid #333; }
+        #search-sports { background: #4c4e5f; color: white; border: none; padding: 10px; border-radius: 4px; width: 250px; }
+        .weekend-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .sports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .sport-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #2a2d37; display: flex; flex-direction: column; }
         .sport-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .sport-img { width: 100%; height: 160px; object-fit: cover; }
-        
-        .sport-content { padding: 15px; }
-        .sport-title { font-size: 17px; font-weight: bold; margin-bottom: 5px; display: block; }
-        .sport-date { color: var(--primary); font-size: 13px; font-weight: 600; }
-        .sport-price { font-size: 18px; font-weight: 800; margin-top: 10px; display: block; }
+        .sport-img { width: 100%; height: 140px; object-fit: cover; background: #333; }
+        .sport-content { padding: 15px; flex-grow: 1; }
+        .sport-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; display: block; height: 40px; overflow: hidden; }
+        .sport-date { color: var(--primary); font-size: 12px; font-weight: 600; }
+        .sport-price { font-size: 18px; font-weight: 800; margin-top: 10px; color: #4caf50; }
+        .count-info { margin-bottom: 15px; color: #999; }
     </style>
 </head>
 <body>
@@ -40,101 +29,228 @@
     <div style="font-weight: 800; color: var(--primary); font-size: 20px;">BMS SPORTS</div>
     <div class="nav-links">
         <a href="index.html">Movies</a>
-        <a href="sports.html" style="opacity: 1; color: var(--primary);">Sports</a>
+        <a href="sports.html" style="color: var(--primary);">Sports</a>
         <a href="login.html">Sign In</a>
     </div>
 </nav>
 
 <div class="container">
     <div class="filter-bar">
-        <div class="filter-group">
-            <label>Filter Date:</label>
-            <input type="date" id="date-input" onchange="filterByDate()">
-        </div>
-        <button class="weekend-btn" id="weekend-filter" onclick="filterWeekend()">This Weekend</button>
-        <button class="reset-btn" onclick="resetFilters()">Reset</button>
-        <div style="margin-left: auto;">
-            <select id="sort-select" onchange="sortSports()">
-                <option value="default">Sort by Price</option>
-                <option value="low">Low to High</option>
-                <option value="high">High to Low</option>
-            </select>
-        </div>
+        <input type="text" id="search-sports" placeholder="Search sports (e.g. Cricket)" onkeyup="filterSearch()">
+        <button class="weekend-btn" onclick="filterWeekend()">This Weekend</button>
+        <button style="background:none; color:#ccc; border:1px solid #444; padding:10px; cursor:pointer;" onclick="resetFilters()">Clear All</button>
+        <select id="sort-select" onchange="sortSports()" style="background:#4c4e5f; color:white; padding:10px; border:none; border-radius:4px;">
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
     </div>
 
-    <div class="sports-grid" id="sports-container">
-        <div class="sport-card" data-price="200" data-day="Sunday" data-date="2026-04-26">
-            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&h=300" class="sport-img">
-            <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
-                <span class="sport-title">Morning Flow Yoga</span>
-                <span class="sport-price">₹200</span>
-            </div>
-        </div>
+    <div class="count-info">Showing <span id="event-count">20</span> events</div>
 
-        <div class="sport-card" data-price="500" data-day="Saturday" data-date="2026-04-25">
-            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=500&h=300" class="sport-img">
+    <div class="sports-grid" id="sports-container">
+        <div class="sport-card" data-price="0" data-day="Saturday" data-title="Public Park Marathon">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.ebvl_F7zfGtlrAAq7VKUPwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
             <div class="sport-content">
                 <span class="sport-date">Sat, 25 Apr</span>
-                <span class="sport-title">Champions Turf League</span>
+                <span class="sport-title">Public Park Marathon</span>
+                <span class="sport-price">Free</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="500" data-day="Sunday" data-title="Champions Turf Football">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Champions Turf Football</span>
                 <span class="sport-price">₹500</span>
             </div>
         </div>
-
-        <div class="sport-card" data-price="1200" data-day="Sunday" data-date="2026-04-26">
-            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=500&h=300" class="sport-img">
+        <div class="sport-card" data-price="1200" data-day="Saturday" data-title="Night Trek to Kalsubai">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
-                <span class="sport-title">Night Trek Expedition</span>
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Night Trek to Kalsubai</span>
                 <span class="sport-price">₹1200</span>
             </div>
         </div>
-
-        <div class="sport-card" data-price="350" data-day="Friday" data-date="2026-04-24">
-            <img src="https://images.unsplash.com/photo-1626225967045-944002b8c480?auto=format&fit=crop&w=500&h=300" class="sport-img">
+        <div class="sport-card" data-price="250" data-day="Friday" data-title="Beginners Yoga Workshop">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400" class="sport-img">
             <div class="sport-content">
                 <span class="sport-date">Fri, 24 Apr</span>
-                <span class="sport-title">Smashers Open 2026</span>
+                <span class="sport-title">Beginners Yoga Workshop</span>
+                <span class="sport-price">₹250</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="1500" data-day="Sunday" data-title="IPL: MI vs CSK Screening">
+            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">IPL: MI vs CSK Screening</span>
+                <span class="sport-price">₹1500</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="300" data-day="Saturday" data-title="Badminton Mixed Doubles">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.ebvl_F7zfGtlrAAq7VKUPwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Badminton Mixed Doubles</span>
+                <span class="sport-price">₹300</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="2000" data-day="Sunday" data-title="Golf Championship Pass">
+            <img src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Golf Championship Pass</span>
+                <span class="sport-price">₹2000</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="150" data-day="Friday" data-title="Zumba Fitness Hour">
+            <img src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-title">Zumba Fitness Hour</span>
+                <span class="sport-price">₹150</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="800" data-day="Saturday" data-title="Box Cricket Tournament">
+            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Box Cricket Tournament</span>
+                <span class="sport-price">₹800</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="1000" data-day="Sunday" data-title="Tennis Pro Coaching">
+            <img src="https://images7.alphacoders.com/132/1323393.jpeg" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Tennis Pro Coaching</span>
+                <span class="sport-price">₹1000</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="450" data-day="Friday" data-title="Swimming Masterclass">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.zsFnRfir30BKLC75u6CgAAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-title">Swimming Masterclass</span>
+                <span class="sport-price">₹450</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="2500" data-day="Saturday" data-title="Premium F1 Screening">
+            <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Premium F1 Screening</span>
+                <span class="sport-price">₹2500</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="100" data-day="Sunday" data-title="Chess Community Meet">
+            <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Chess Community Meet</span>
+                <span class="sport-price">₹100</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="600" data-day="Saturday" data-title="Table Tennis League">
+            <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Table Tennis League</span>
+                <span class="sport-price">₹600</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="350" data-day="Friday" data-title="Karate Self Defense">
+            <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-title">Karate Self Defense</span>
                 <span class="sport-price">₹350</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="700" data-day="Sunday" data-title="Basketball 3v3 Match">
+            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Basketball 3v3 Match</span>
+                <span class="sport-price">₹700</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="400" data-day="Saturday" data-title="Volleyball Beach Meet">
+            <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Volleyball Beach Meet</span>
+                <span class="sport-price">₹400</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="900" data-day="Sunday" data-title="Horse Riding Basics">
+            <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-title">Horse Riding Basics</span>
+                <span class="sport-price">₹900</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="550" data-day="Friday" data-title="Rock Climbing Gym">
+            <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-title">Rock Climbing Gym</span>
+                <span class="sport-price">₹550</span>
+            </div>
+        </div>
+        <div class="sport-card" data-price="1100" data-day="Saturday" data-title="Cycling City Tour">
+            <img src="https://images.unsplash.com/photo-1471506480208-8a93aee93371?w=400" class="sport-img">
+            <div class="sport-content">
+                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-title">Cycling City Tour</span>
+                <span class="sport-price">₹1100</span>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    function updateCount() {
+        const visible = document.querySelectorAll('.sport-card[style="display: flex;"], .sport-card:not([style])').length;
+        document.getElementById('event-count').textContent = visible;
+    }
+
+    function filterSearch() {
+        const query = document.getElementById('search-sports').value.toLowerCase();
+        const cards = document.querySelectorAll('.sport-card');
+        cards.forEach(card => {
+            const title = card.getAttribute('data-title').toLowerCase();
+            card.style.display = title.includes(query) ? 'flex' : 'none';
+        });
+        updateCount();
+    }
+
     function filterWeekend() {
         const cards = document.querySelectorAll('.sport-card');
         cards.forEach(card => {
             const day = card.getAttribute('data-day');
-            card.style.display = (day === 'Saturday' || day === 'Sunday') ? 'block' : 'none';
+            card.style.display = (day === 'Saturday' || day === 'Sunday') ? 'flex' : 'none';
         });
-    }
-
-    function filterByDate() {
-        const selectedDate = document.getElementById('date-input').value;
-        const cards = document.querySelectorAll('.sport-card');
-        cards.forEach(card => {
-            card.style.display = (card.getAttribute('data-date') === selectedDate) ? 'block' : 'none';
-        });
+        updateCount();
     }
 
     function resetFilters() {
-        const cards = document.querySelectorAll('.sport-card');
-        cards.forEach(card => card.style.display = 'block');
-        document.getElementById('date-input').value = '';
+        document.querySelectorAll('.sport-card').forEach(c => c.style.display = 'flex');
+        document.getElementById('search-sports').value = '';
+        updateCount();
     }
 
     function sortSports() {
         const container = document.getElementById('sports-container');
         const cards = Array.from(container.getElementsByClassName('sport-card'));
-        const val = document.getElementById('sort-select').value;
-
+        const order = document.getElementById('sort-select').value;
         cards.sort((a, b) => {
             let p1 = parseInt(a.getAttribute('data-price'));
             let p2 = parseInt(b.getAttribute('data-price'));
-            return val === 'low' ? p1 - p2 : p2 - p1;
+            return order === 'low' ? p1 - p2 : p2 - p1;
         });
-
         cards.forEach(card => container.appendChild(card));
     }
 </script>
