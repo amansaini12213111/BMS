@@ -2,141 +2,255 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BookMyShow Clone - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMS - Book Your Show</title>
     <style>
-        :root { --primary: #f84464; --dark: #333545; --bg: #0b0b0c; --card-bg: #1f2128; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background: var(--bg); color: #fff; }
-        
-        nav { background: var(--dark); padding: 12px 10%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #444; position: sticky; top: 0; z-index: 100; }
-        .nav-left { display: flex; align-items: center; gap: 30px; }
-        .logo { color: var(--primary); font-size: 26px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        #location-dropdown { background: #4c4e5f; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
-        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; opacity: 0.8; }
+        :root {
+            --primary: #f84464;
+            --secondary: #2b2d42;
+            --bg: #0b0b0c;
+            --card-bg: #1f2128;
+            --text-main: #ffffff;
+            --text-dim: #999999;
+        }
 
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
-        .movie-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.4s; cursor: pointer; position: relative; border: 1px solid #2a2d37; }
-        .movie-card:hover { transform: scale(1.03); border-color: var(--primary); }
-        
-        .movie-card img { width: 100%; height: 320px; object-fit: cover; }
-        .movie-info { padding: 15px; }
-        .movie-name { font-size: 17px; font-weight: 600; margin: 0; color: #fff; }
-        
-        /* Language Styling */
-        .movie-lang { display: inline-block; background: #333; color: var(--primary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-top: 8px; font-weight: bold; text-transform: uppercase; }
-        .movie-genre { font-size: 13px; color: #999; margin-top: 4px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .ad-section { margin-top: 50px; background: #fff; border-radius: 10px; overflow: hidden; }
-        iframe { width: 100%; height: 100px; border: none; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- STICKY NAVBAR --- */
+        nav {
+            background: rgba(51, 53, 69, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #444;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .nav-search {
+            background: #ffffff;
+            border-radius: 5px;
+            width: 40%;
+            display: flex;
+            align-items: center;
+            padding: 5px 15px;
+        }
+
+        .nav-search input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 400px;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2)), 
+                        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 8%;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .hero h1 { font-size: 48px; margin-bottom: 10px; }
+        .hero p { font-size: 18px; color: #ccc; margin-bottom: 20px; }
+
+        /* --- CATEGORY SECTION --- */
+        .container {
+            max-width: 1300px;
+            margin: 50px auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 { font-size: 24px; }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .tile {
+            background: var(--card-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #2a2d37;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tile:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(248, 68, 100, 0.2);
+        }
+
+        .tile img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .tile:hover img { opacity: 1; }
+
+        .tile-content {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .tile h3 { font-size: 16px; margin-bottom: 5px; }
+        .tile p { font-size: 12px; color: var(--text-dim); }
+
+        /* --- PROMO BANNER --- */
+        .promo-banner {
+            background: #2b2d42;
+            margin: 60px 0;
+            padding: 40px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #1f2128;
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="nav-left">
-        <div class="logo" onclick="location.reload()">BMS Clone</div>
-        <select id="location-dropdown">
-            <option value="mumbai">Mumbai</option>
-            <option value="delhi">Delhi</option>
-            <option value="bangalore">Bangalore</option>
-        </select>
+    <a href="index.html" class="logo">BMS</a>
+    <div class="nav-search">
+        <input type="text" placeholder="Search for Movies, Events, Plays, Sports and Activities" id="main-search">
     </div>
     <div class="nav-links">
-        <a href="index.html">Movies</a>
+        <a href="movies.html">Movies</a>
         <a href="sports.html">Sports</a>
         <a href="login.html">Sign In</a>
     </div>
 </nav>
 
+<div class="hero">
+    <h1>It All Starts Here!</h1>
+    <p>Movies, Music, Comedy, Sports and more...</p>
+</div>
+
 <div class="container">
     <div class="section-header">
-        <span style="font-size: 24px; font-weight: 700;">Recommended Movies</span>
+        <h2>The Best of Live Events</h2>
     </div>
 
-    <div class="movie-grid" id="movie-container">
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400" alt="Oppenheimer">
-            <div class="movie-info">
-                <p class="movie-name">Oppenheimer</p>
-                <span class="movie-lang">English</span>
-                <p class="movie-genre">Drama / Historical</p>
+    <div class="category-grid" id="master-grid">
+        <a href="movies.html" class="tile" id="movies-tile">
+            <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400" alt="Movies">
+            <div class="tile-content">
+                <h3>Movies</h3>
+                <p>Non-stop Entertainment</p>
             </div>
+        </a>
+        <a href="sports.html" class="tile" id="sports-tile">
+            <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400" alt="Sports">
+            <div class="tile-content">
+                <h3>Sports</h3>
+                <p>Cheer for your team</p>
+            </div>
+        </a>
+        <a href="#" class="tile">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBNOfxzYEMYUxmZKeZ1yziLieOVwmEt0rNRQ&s" alt="Music">
+            <div class="tile-content">
+                <h3>Music Shows</h3>
+                <p>Live Concerts</p>
+            </div>
+        </a>
+        <a href="#" class="tile">
+            <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400" alt="Comedy">
+            <div class="tile-content">
+                <h3>Comedy Shows</h3>
+                <p>Laugh Out Loud</p>
+            </div>
+        </a>
+        <a href="#" class="tile">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1Xaee8y91kcDrFHNX4PCaYsF4_I6PghpYg&s" alt="Plays">
+            <div class="tile-content">
+                <h3>Plays</h3>
+                <p>Theatre & Drama</p>
+            </div>
+        </a>
         </div>
 
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400" alt="Jawan">
-            <div class="movie-info">
-                <p class="movie-name">Jawan</p>
-                <span class="movie-lang">Hindi</span>
-                <p class="movie-genre">Action / Thriller</p>
-            </div>
+    <div class="promo-banner">
+        <div>
+            <h3>List your Show</h3>
+            <p>Got a show, event, activity or a great experience? Partner with us.</p>
         </div>
-
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" alt="Dune">
-            <div class="movie-info">
-                <p class="movie-name">Dune: Part Two</p>
-                <span class="movie-lang">English</span>
-                <p class="movie-genre">Sci-Fi / Adventure</p>
-            </div>
-        </div>
-
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=400" alt="RRR">
-            <div class="movie-info">
-                <p class="movie-name">RRR</p>
-                <span class="movie-lang">Telugu</span>
-                <p class="movie-genre">Action / Drama</p>
-            </div>
-        </div>
-
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1594908900066-3f47337549d8?q=80&w=400" alt="KGF">
-            <div class="movie-info">
-                <p class="movie-name">KGF: Chapter 2</p>
-                <span class="movie-lang">Kannada</span>
-                <p class="movie-genre">Action / Crime</p>
-            </div>
-        </div>
-
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?q=80&w=400" alt="Spiderman">
-            <div class="movie-info">
-                <p class="movie-name">Spider-Man: Across the Spider-Verse</p>
-                <span class="movie-lang">English</span>
-                <p class="movie-genre">Animation / Action</p>
-            </div>
-        </div>
-
-
-        <div class="movie-card">
-            <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400" alt="Manjummel Boys">
-            <div class="movie-info">
-                <p class="movie-name">Manjummel Boys</p>
-                <span class="movie-lang">Malayalam</span>
-                <p class="movie-genre">Survival / Drama</p>
-            </div>
-        </div>
-
-        <div class="movie-card">
-            <img src="https://i.ytimg.com/vi/qmUtiYzZPaA/maxresdefault.jpg" alt="Manjummel Boys">
-            <div class="movie-info">
-                <p class="movie-name">SuperBoyz Malegaon</p>
-                <span class="movie-lang">Malayalam</span>
-                <p class="movie-genre">Survival / Drama</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="ad-section">
-        <iframe id="promo-frame" srcdoc="<html><body style='background:#f84464; color:white; font-family:sans-serif; text-align:center; padding-top:10px;'><h2>UPCOMING: AVATAR 3</h2><p>Pre-book tickets soon!</p></body></html>"></iframe>
+        <a href="#" class="promo-btn">Contact Us</a>
     </div>
 </div>
 
-<footer style="margin-top: 100px; padding: 40px; text-align: center; border-top: 1px solid #333; color: #666;">
-    <p>© 2026 Mini-BookMyShow Platform. Practicing Text Extraction and Collections.</p>
+<footer>
+    <p>© 2026 BMS Clone. All rights reserved.</p>
+    <p>Corporate Office: Mumbai, India</p>
 </footer>
 
 </body>
