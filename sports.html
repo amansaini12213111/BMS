@@ -6,7 +6,7 @@
     <style>
         :root { --primary: #f84464; --dark: #333545; --bg: #0b0b0c; --card-bg: #1f2128; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: #fff; }
-        nav { background: var(--dark); padding: 15px 10%; display: flex; justify-content: space-between; border-bottom: 1px solid #444; sticky; top: 0; z-index: 100; }
+        nav { background: var(--dark); padding: 15px 10%; display: flex; justify-content: space-between; border-bottom: 1px solid #444; position: sticky; top: 0; z-index: 100; }
         .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; opacity: 0.8; }
         .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .filter-bar { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 30px; border: 1px solid #333; }
@@ -28,7 +28,8 @@
 <nav>
     <div style="font-weight: 800; color: var(--primary); font-size: 20px;">BMS SPORTS</div>
     <div class="nav-links">
-        <a href="index.html">Movies</a>
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
         <a href="sports.html" style="color: var(--primary);">Sports</a>
         <a href="login.html">Sign In</a>
     </div>
@@ -51,7 +52,7 @@
         <div class="sport-card" data-price="0" data-day="Saturday" data-title="Public Park Marathon">
             <img src="https://tse2.mm.bing.net/th/id/OIP.ebvl_F7zfGtlrAAq7VKUPwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 25 May</span>
                 <span class="sport-title">Public Park Marathon</span>
                 <span class="sport-price">₹49</span>
             </div>
@@ -59,7 +60,7 @@
         <div class="sport-card" data-price="500" data-day="Sunday" data-title="Champions Turf Football">
             <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 17 May</span>
                 <span class="sport-title">Champions Turf Football</span>
                 <span class="sport-price">₹500</span>
             </div>
@@ -67,7 +68,7 @@
         <div class="sport-card" data-price="1200" data-day="Saturday" data-title="Night Trek to Kalsubai">
             <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 15 May</span>
                 <span class="sport-title">Night Trek to Kalsubai</span>
                 <span class="sport-price">₹1200</span>
             </div>
@@ -75,7 +76,7 @@
         <div class="sport-card" data-price="250" data-day="Friday" data-title="Beginners Yoga Workshop">
             <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-date">Fri, 17 May</span>
                 <span class="sport-title">Beginners Yoga Workshop</span>
                 <span class="sport-price">₹250</span>
             </div>
@@ -83,7 +84,7 @@
         <div class="sport-card" data-price="1500" data-day="Sunday" data-title="IPL: MI vs CSK Screening">
             <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 19 May</span>
                 <span class="sport-title">IPL: MI vs CSK Screening</span>
                 <span class="sport-price">₹1500</span>
             </div>
@@ -91,7 +92,7 @@
         <div class="sport-card" data-price="300" data-day="Saturday" data-title="Badminton Mixed Doubles">
             <img src="https://tse2.mm.bing.net/th/id/OIP.ebvl_F7zfGtlrAAq7VKUPwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 16 May</span>
                 <span class="sport-title">Badminton Mixed Doubles</span>
                 <span class="sport-price">₹300</span>
             </div>
@@ -99,7 +100,7 @@
         <div class="sport-card" data-price="2000" data-day="Sunday" data-title="Golf Championship Pass">
             <img src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 17 May</span>
                 <span class="sport-title">Golf Championship Pass</span>
                 <span class="sport-price">₹2000</span>
             </div>
@@ -107,7 +108,7 @@
         <div class="sport-card" data-price="150" data-day="Friday" data-title="Zumba Fitness Hour">
             <img src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-date">Fri, 19 May</span>
                 <span class="sport-title">Zumba Fitness Hour</span>
                 <span class="sport-price">₹150</span>
             </div>
@@ -115,7 +116,7 @@
         <div class="sport-card" data-price="800" data-day="Saturday" data-title="Box Cricket Tournament">
             <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 20 May</span>
                 <span class="sport-title">Box Cricket Tournament</span>
                 <span class="sport-price">₹800</span>
             </div>
@@ -123,7 +124,7 @@
         <div class="sport-card" data-price="1000" data-day="Sunday" data-title="Tennis Pro Coaching">
             <img src="https://images7.alphacoders.com/132/1323393.jpeg" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 21 May</span>
                 <span class="sport-title">Tennis Pro Coaching</span>
                 <span class="sport-price">₹1000</span>
             </div>
@@ -131,7 +132,7 @@
         <div class="sport-card" data-price="450" data-day="Friday" data-title="Swimming Masterclass">
             <img src="https://tse2.mm.bing.net/th/id/OIP.zsFnRfir30BKLC75u6CgAAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-date">Fri, 19 May</span>
                 <span class="sport-title">Swimming Masterclass</span>
                 <span class="sport-price">₹450</span>
             </div>
@@ -139,7 +140,7 @@
         <div class="sport-card" data-price="2500" data-day="Saturday" data-title="Premium F1 Screening">
             <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 25 May</span>
                 <span class="sport-title">Premium F1 Screening</span>
                 <span class="sport-price">₹2500</span>
             </div>
@@ -147,7 +148,7 @@
         <div class="sport-card" data-price="100" data-day="Sunday" data-title="Chess Community Meet">
             <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 16 May</span>
                 <span class="sport-title">Chess Community Meet</span>
                 <span class="sport-price">₹100</span>
             </div>
@@ -155,7 +156,7 @@
         <div class="sport-card" data-price="600" data-day="Saturday" data-title="Table Tennis League">
             <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 25 May</span>
                 <span class="sport-title">Table Tennis League</span>
                 <span class="sport-price">₹600</span>
             </div>
@@ -163,7 +164,7 @@
         <div class="sport-card" data-price="350" data-day="Friday" data-title="Karate Self Defense">
             <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-date">Fri, 17 May</span>
                 <span class="sport-title">Karate Self Defense</span>
                 <span class="sport-price">₹350</span>
             </div>
@@ -171,7 +172,7 @@
         <div class="sport-card" data-price="700" data-day="Sunday" data-title="Basketball 3v3 Match">
             <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 16 May</span>
                 <span class="sport-title">Basketball 3v3 Match</span>
                 <span class="sport-price">₹700</span>
             </div>
@@ -179,7 +180,7 @@
         <div class="sport-card" data-price="400" data-day="Saturday" data-title="Volleyball Beach Meet">
             <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 25 May</span>
                 <span class="sport-title">Volleyball Beach Meet</span>
                 <span class="sport-price">₹400</span>
             </div>
@@ -187,7 +188,7 @@
         <div class="sport-card" data-price="900" data-day="Sunday" data-title="Horse Riding Basics">
             <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sun, 26 Apr</span>
+                <span class="sport-date">Sun, 26 May</span>
                 <span class="sport-title">Horse Riding Basics</span>
                 <span class="sport-price">₹900</span>
             </div>
@@ -195,7 +196,7 @@
         <div class="sport-card" data-price="550" data-day="Friday" data-title="Rock Climbing Gym">
             <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Fri, 24 Apr</span>
+                <span class="sport-date">Fri, 24 May</span>
                 <span class="sport-title">Rock Climbing Gym</span>
                 <span class="sport-price">₹550</span>
             </div>
@@ -203,7 +204,7 @@
         <div class="sport-card" data-price="1100" data-day="Saturday" data-title="Cycling City Tour">
             <img src="https://images.unsplash.com/photo-1471506480208-8a93aee93371?w=400" class="sport-img">
             <div class="sport-content">
-                <span class="sport-date">Sat, 25 Apr</span>
+                <span class="sport-date">Sat, 25 May</span>
                 <span class="sport-title">Cycling City Tour</span>
                 <span class="sport-price">₹1100</span>
             </div>
